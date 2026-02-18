@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给焦老师的拜年祝福</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #b90504;
+            --dark-red: #8a0303;
+            --gold: #fddb92;
+            --paper-color: #fff9e6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            background: radial-gradient(circle at center, var(--primary-red), var(--dark-red));
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* 背景装饰 - 巨大的福字水印 */
+        .bg-watermark {
+            position: absolute;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 30vw;
+            color: rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+            animation: pulse 5s infinite ease-in-out;
+        }
+
+        /* 金色粒子背景动画 */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        /* 弹窗遮罩层 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            animation: fadeIn 0.8s forwards 0.5s; /* 延迟一点出现 */
+        }
+
+        /* 祝福卡片 */
+        .card {
+            background-color: var(--paper-color);
+            width: 90%;
+            max-width: 500px;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5),
+                        inset 0 0 0 8px var(--primary-red),
+                        inset 0 0 0 10px var(--gold);
+            text-align: center;
+            transform: translateY(50px) scale(0.9);
+            opacity: 0;
+            animation: popUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.8s;
+            position: relative;
+        }
+
+        /* 装饰角花 */
+        .corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--primary-red);
+            z-index: 1;
+        }
+        .top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+        .top-right { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+        .bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+
+        /* 标题 */
+        h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            color: var(--primary-red);
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* 正文 */
+        p.content {
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: justify;
+            text-indent: 2em;
+        }
+
+        /* 落款 */
+        .signature {
+            text-align: right;
+            font-weight: bold;
+            color: var(--dark-red);
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        /* 关闭按钮 */
+        .close-btn {
+            background: linear-gradient(to right, var(--primary-red), var(--dark-red));
+            color: var(--gold);
+            border: none;
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-family: 'Ma Shan Zheng', cursive;
+            box-shadow: 0 5px 15px rgba(185, 5, 4, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(185, 5, 4, 0.6);
+        }
+
+        /* 动画定义 */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes popUp {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.05); opacity: 0.2; }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* 关闭后的背景文字 */
+        .hidden-message {
+            display: none;
+            color: var(--gold);
+            text-align: center;
+            z-index: 10;
+        }
+        .hidden-message h2 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .card { width: 85%; padding: 30px 20px; }
+            p.content { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-watermark">福</div>
+
+    <div class="hidden-message" id="bgMsg">
+        <h2>桃李满天下</h2>
+        <h2>春晖遍四方</h2>
+    </div>
+
+    <div class="modal-overlay" id="greetingModal">
+        <div class="card">
+            <div class="corner top-left"></div>
+            <div class="corner top-right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="corner bottom-right"></div>
+
+            <h1>焦老师过年好！！！</h1>
+
+            <div class="content">
+                <p class="content">
+                    感谢老师一个学期以来对我们学业上和科研上的支持鼓励。来年我们会更加积极努力，更上一层楼。祝老师生活安然，喜乐常伴，诸事圆满！
+                </p>
+            </div>
+
+            <div class="signature">
+                您的学生：李卓泠 & 李锦琦
+            </div>
+
+            <button class="close-btn" onclick="closeModal()">🧧 收下祝福</button>
+        </div>
+    </div>
+
+    <script>
+        // 生成金色粒子背景
+        function createParticles() {
+            const particleCount = 50;
+            const body = document.body;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // 随机位置和动画参数
+                const x = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = 5 + Math.random() * 5;
+                const size = 3 + Math.random() * 5;
+
+                particle.style.left = `${x}vw`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                body.appendChild(particle);
+            }
+        }
+
+        // 关闭弹窗
+        function closeModal() {
+            const modal = document.getElementById('greetingModal');
+            modal.style.transition = "opacity 0.8s";
+            modal.style.opacity = '0';
+
+            setTimeout(() => {
+                modal.style.display = 'none';
+                // 显示背景文字
+                const bgMsg = document.getElementById('bgMsg');
+                bgMsg.style.display = 'block';
+                bgMsg.style.animation = 'fadeIn 1s forwards';
+            }, 800);
+        }
+
+        // 初始化
+        window.onload = createParticles;
+    </script>
+</body>
+</html>
